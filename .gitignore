@@ -1,0 +1,26 @@
+# Ignore Python virtual environment
+venv/
+.venv/
+
+# Ignore node modules
+node_modules/
+
+# Ignore OS files
+.DS_Store
+
+# Ignore log files
+*.log
+
+# Ignore build output
+dist/
+build/
+
+# Ignore database files
+*.db
+
+# Ignore IDE specific files
+__pycache__
+
+# Ignore Stashed changes
+*.db~Stashed changes
+Dockerfile~Stashed changes
