@@ -1,0 +1,92 @@
+openapi: 3.0.3
+info:
+  title: Cat Facts API
+  version: 1.0.0
+  description: API for retrieving and adding cat facts.
+servers:
+  - url: http://localhost:8080
+paths:
+  /catfacts:
+    get:
+      summary: Get all cat facts
+      operationId: getAllCatFacts
+      tags:
+        - CatFacts
+      responses:
+        "200":
+          description: A list of cat fact objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CatFact"
+    post:
+      summary: Add a new cat fact
+      operationId: addCatFact
+      tags:
+        - CatFacts
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                fact:
+                  type: string
+                  description: The cat fact to add.
+      responses:
+        "201":
+          description: The newly added cat fact.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CatFact"
+        "400":
+          description: Fact cannot be empty.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "409":
+          description: Duplicate fact.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /catfacts/random:
+    get:
+      summary: Get a random cat fact
+      operationId: getRandomCatFact
+      tags:
+        - CatFacts
+      responses:
+        "200":
+          description: A random cat fact.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fact:
+                    type: string
+        "404":
+          description: No cat facts available.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    CatFact:
+      type: object
+      properties:
+        id:
+          type: integer
+        fact:
+          type: string
+        created_at:
+          type: string
+    Error:
+      type: object

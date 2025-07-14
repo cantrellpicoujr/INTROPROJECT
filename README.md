@@ -1,70 +1,142 @@
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
 # INTROPROJECT
+
+This project is a full-stack web app with a FastAPI backend and a React frontend. It allows users to view and add cat facts, which are stored in a SQLite database.
+
+---
+
+## Prerequisites
+
+- **Python 3.10+**
+- **Node.js 18+** and **npm** (or **yarn**)
+- **Git** (for version control)
+
+---
+
+## Environment Setup
+
+Create a `.env` file at the **root of the project directory** (`INTROPROJECT/.env`) with the following content:
+
+**The host Vite and FastAPI should bind to (localhost for Docker)**
+
+```bash
+HOST=localhost
+```
+
+**Port for React frontend (Vite)**
+
+```bash
+FRONTEND_PORT=5573
+```
+
+**Port for FastAPI backend**
+
+```bash
+BACKEND_PORT=8080
+```
+
+---
+
+## Backend Setup
+
+1. **Clone the repository:**
+
+```bash
+git clone https://github.com/cantrellpicoujr/INTROPROJECT.git
+cd INTROPROJECT
+```
+
+2. **Create a Python virtual environment:**
+
+   ```bash
+   python3 -m venv .venv
+   source venv/bin/activate
+   ```
+
+3. **Install Python dependencies:**
+   ```bash
+   pip install -r backend/requirements.txt
+   ```
+
+## Running with Docker
+
+You can use Docker to run both the backend and frontend in containers.
+
+1. **Build the Docker images:**
+
+   ```bash
+   docker-compose build
+   ```
+
+2. **Start the containers:**
+
+   ```bash
+   docker-compose up
+   ```
+
+   - The FastAPI backend will be available at `http://localhost:8000`
+   - The React frontend will be available at `http://localhost:5573`
+
+3. **Stop the containers:**
+   ```bash
+   docker-compose down
+   ```
+
+> **Note:** Make sure you have a valid `docker-compose.yml` file in your project root that defines both services.
+
+## Prerequisites for Docker
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed on your machine
+
+---
+
+## Frontend Setup (React + Vite)
+
+1. **Install frontend dependencies:**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+---
+
+## Development Notes
+
+- **CORS** is enabled in the backend to allow frontend-backend communication during development.
+- **API Endpoints:**
+  - `GET /catfacts` — List all cat facts
+  - `GET /catfacts/random` — Get a random cat fact
+  - `POST /catfacts` — Add a new cat fact (form field: `fact`)
+
+---
+
+## Common Commands
+
+- **Activate virtual environment:**  
+  `source venv/bin/activate`
+- **Deactivate virtual environment:**  
+  `deactivate`
+- **Install new Python package:**  
+  `pip install <package> && pip freeze > requirements.txt`
+- **Install new frontend package:**  
+  `npm install <package>`
+
+---
+
+## Troubleshooting
+
+- If you see errors about missing dependencies, ensure you have activated your Python virtual environment and installed all requirements.
+- If you have issues with large files or Git, check your `.gitignore` and remove large files from Git history if needed.
+
+---
+
+## Contributing
+
+1. Fork the repo and create your branch:  
+   `git checkout -b feature/your-feature`
+2. Commit your changes:  
+   `git commit -m "Add your feature"`
+3. Push to the branch:  
+   `git push origin feature/your-feature`
+4. Open a pull request.
